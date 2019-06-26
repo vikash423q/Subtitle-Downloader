@@ -36,7 +36,8 @@ const styles = {
 }
 
 
-const SearchBar = ({ classes }) => {
+const SearchBar = (props) => {
+    const { classes } = props;
     const [state, setstate] = useState({ selected: 'movie', searchText: null });
 
     return (
@@ -74,7 +75,7 @@ const SearchBar = ({ classes }) => {
             </Grid>
             <Grid item xs={3}>
                 <Button variant="contained" color="primary" size="large"
-                    onClick={(e) => { console.log(state) }}
+                    onClick={() => props.click(state.selected, state.searchText)}
                     className={classes.button}>Search</Button>
             </Grid>
         </Grid>

@@ -1,9 +1,10 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
 import SearchBar from '../SearchBar';
+import Catalog from '../Catalog';
+import DownloadView from '../DownloadView';
 
 const styles = {
     grid: {
@@ -26,14 +27,37 @@ const styles = {
     }
 }
 
-const Viewer = ({ classes }) => {
-    return (
-        <Grid className={classes.grid}>
-            <Paper className={classes.paper}>
-                <SearchBar/>
-            </Paper>
-        </Grid >
-    )
+class Viewer extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            view_selected: null,
+            searchText: null
+        }
+    }
+
+
+    selectView = (view, text) => {
+        this.setState({
+            view_selected: view,
+            searchText: text
+        });
+    }
+
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <Grid className={classes.grid}>
+                <Paper className={classes.paper}>
+                    <SearchBar click={this.selectView} />
+                    <Catalog type={this.state.view_selected} item={this.state.searchText} />
+                    <DownloadView />
+                </Paper>
+            </Grid >
+        );
+    }
 }
 
 export default withStyles(styles)(Viewer);
