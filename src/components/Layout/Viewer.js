@@ -2,6 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
+import { GET_MOVIE_IMDBID, LIST_MOVIES_SUBTITLES, apikey } from '../../config';
 import SearchBar from '../SearchBar';
 import Catalog from '../Catalog';
 import DownloadView from '../DownloadView';
@@ -33,16 +34,22 @@ class Viewer extends React.Component {
 
         this.state = {
             view_selected: null,
-            searchText: null
+            searchText: null,
+            options: []
         }
+    }
+
+    loadResults = (view, text) => {
+        fetch(GET_MOVIE_IMDBID(text, apikey)).then((results) => results.json()).then((res) => this.setState({
+            options: res['Search'], view_selected: view,
+            searchText: text
+        }));
     }
 
 
     selectView = (view, text) => {
-        this.setState({
-            view_selected: view,
-            searchText: text
-        });
+        console.log(view, text);
+        this.loadResults(view, text);
     }
 
 
@@ -52,7 +59,7 @@ class Viewer extends React.Component {
             <Grid className={classes.grid}>
                 <Paper className={classes.paper}>
                     <SearchBar click={this.selectView} />
-                    <Catalog type={this.state.view_selected} item={this.state.searchText} />
+                    <Catalog type={this.state.view_selected} items={this.state.options} />
                     <DownloadView />
                 </Paper>
             </Grid >
