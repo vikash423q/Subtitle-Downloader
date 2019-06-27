@@ -12,7 +12,8 @@ import Button from '@material-ui/core/Button';
 
 const styles = {
     grid: {
-        marginTop: 4,
+        marginRight: 8,
+        marginTop: 12,
         marginBottom: 4,
     },
     paper: {
@@ -22,6 +23,7 @@ const styles = {
         height: 500
     },
     container: {
+
         display: 'flex',
         flexWrap: 'no-wrap',
         margin: 10
@@ -41,7 +43,7 @@ const SearchBar = (props) => {
     const [state, setstate] = useState({ selected: 'movie', searchText: null });
 
     return (
-        <Grid container spacing={3} className={{ marginTop: 8 }}>
+        <Grid container spacing={3} className={classes.grid}>
             <Grid item xs={2}>
                 <FormControl className={classes.container}>
                     <InputLabel htmlFor="type">Type</InputLabel>

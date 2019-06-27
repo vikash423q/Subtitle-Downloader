@@ -16,7 +16,7 @@ const styles = {
         paddingTop: 10,
         paddingLeft: 5,
         paddingRight: 5,
-        height: 500
+        height: 700
     },
     container: {
         display: 'flex',

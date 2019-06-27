@@ -8,7 +8,7 @@ class Catalog extends Component {
 
     render() {
         return (
-            <Grid container>
+            <Grid>
                 {this.props.type != null ? (this.props.type === 'movie' ? <MovieView items={this.props.items} /> : <SeriesView items={this.props.items} />) : null}
             </Grid>
         );
