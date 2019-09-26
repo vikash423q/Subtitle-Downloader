@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -8,7 +8,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import withStyles from '@material-ui/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { type_selected, change_term } from '../actions';
 
 const styles = {
     grid: {
@@ -40,7 +42,6 @@ const styles = {
 
 const SearchBar = (props) => {
     const { classes } = props;
-    const [state, setstate] = useState({ selected: 'movie', searchText: null });
 
     return (
         <Grid container spacing={3} className={classes.grid}>
@@ -49,8 +50,8 @@ const SearchBar = (props) => {
                     <InputLabel htmlFor="type">Type</InputLabel>
                     <Select
                         name="type"
-                        value={state.selected}
-                        onChange={(e) => setstate({ selected: e.target.value, searchText: state.searchText })}>
+                        value={props.type}
+                        onChange={(e) => props.selectType(e.target.value)}>
                         <MenuItem value='movie'>Movie</MenuItem>
                         <MenuItem value='series'>Series</MenuItem>
                     </Select>
@@ -63,9 +64,9 @@ const SearchBar = (props) => {
                         id="outlined-full-width"
                         label="Search"
                         style={{ margin: 4 }}
-                        placeholder={`Search for ${state.selected}`}
-                        value={state.searchText}
-                        onChange={(e) => setstate({ searchText: e.target.value, selected: state.selected })}
+                        placeholder={`Search for ${props.type}`}
+                        value={props.term}
+                        onChange={(e) => props.termChanged(e.target.value)}
                         fullWidth
                         margin="10px"
                         variant="outlined"
@@ -77,11 +78,18 @@ const SearchBar = (props) => {
             </Grid>
             <Grid item xs={3}>
                 <Button variant="contained" color="primary" size="large"
-                    onClick={() => props.click(state.selected, state.searchText)}
+                    onClick={() => props.click(props.type, props.term)}
                     className={classes.button}>Search</Button>
             </Grid>
         </Grid>
     );
 }
 
-export default withStyles(styles)(SearchBar);
+const mapStateToProps = (state) => {
+    return { type: state.search.type, term: state.search.term };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ selectType: type_selected, termChanged: change_term }, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchBar));

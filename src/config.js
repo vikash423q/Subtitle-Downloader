@@ -6,8 +6,8 @@ export const LIST_SERIES_SEASONS = (imdbid, apikey) => `http://www.omdbapi.com/?
 
 export const LIST_SERIES_EPISODES = (imdbid, season_number, apikey) => `http://www.omdbapi.com/?i=${imdbid}&Season=${season_number}&apikey=${apikey}`;
 
-export const LIST_SERIES_SUBTITLES = (imdbid, season_number, episode_number) => `https://rest.opensubtitles.org/search/imdbid-${imdbid}/season-${season_number}/episode-${episode_number}`;
+export const LIST_SERIES_SUBTITLES = (imdbid, season_number, episode_number) => `http://vikashgaurav.com/subtitle/series/${imdbid}/${season_number}/${episode_number}`;
 
-export const LIST_MOVIES_SUBTITLES = (imdbid) => `https://rest.opensubtitles.org/search/imdbid-${imdbid}`;
+export const LIST_MOVIES_SUBTITLES = (imdbid) => `http://vikashgaurav.com/subtitle/movie/${imdbid}`;
 
-export const apikey = 'c6208303'
+export const apikey = 'c6208303';

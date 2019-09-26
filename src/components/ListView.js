@@ -1,22 +1,20 @@
 import React from 'react';
 import makeStyles from '@material-ui/styles/makeStyles';
-import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
 import CardView from './CardView';
 
 
 const useStyles = makeStyles(theme => ({
     root: {
-        marginTop: 20,
-        marginRight: 20,
-        marginLeft: 20,
+        marginRight: 10,
+        marginLeft: 10,
         height: '100%',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
+        backgroundColor: 'lightGrey',
+        elevation: 8
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -27,23 +25,23 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         float: 'left',
         width: '100%',
-        margin: 2,
-        minWidth: 160,
-        minHeight: 250,
+        marginTop: 5,
+        minWidth: 165,
+        minHeight: 240,
         overflow: 'hidden',
         height: '100% !important'
     }
 }));
 
 
-const MovieView = (props) => {
+const ListView = (props) => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <GridList className={classes.gridList} cols={10}>
+        <div className={classes.root} my="auto">
+            <GridList className={classes.gridList} cols={10} my="auto">
                 {props.items.map(item => (
                     <GridListTile className={classes.tile} key={item.Poster}>
-                        <CardView item={item} />
+                        <CardView item={item} type={props.type} />
                     </GridListTile>
                 ))}
             </GridList>
@@ -52,4 +50,4 @@ const MovieView = (props) => {
 }
 
 
-export default MovieView;
+export default ListView;

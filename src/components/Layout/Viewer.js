@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { GET_MOVIE_IMDBID, LIST_MOVIES_SUBTITLES, apikey } from '../../config';
+import { GET_MOVIE_IMDBID, LIST_MOVIES_SUBTITLES, GET_SERIES_IMDBID, apikey } from '../../config';
 import SearchBar from '../SearchBar';
 import Catalog from '../Catalog';
 import DownloadView from '../DownloadView';
@@ -15,8 +15,7 @@ const styles = {
     paper: {
         paddingTop: 10,
         paddingLeft: 5,
-        paddingRight: 5,
-        height: 700
+        paddingRight: 5
     },
     container: {
         display: 'flex',
@@ -33,23 +32,31 @@ class Viewer extends React.Component {
         super(props);
 
         this.state = {
-            view_selected: null,
-            searchText: null,
-            options: []
+            type: null,
+            term: null,
+            items: []
         }
     }
 
-    loadResults = (view, text) => {
-        fetch(GET_MOVIE_IMDBID(text, apikey)).then((results) => results.json()).then((res) => this.setState({
-            options: res['Search'], view_selected: view,
-            searchText: text
+    loadMovies = (type, term) => {
+        fetch(GET_MOVIE_IMDBID(term, apikey)).then((results) => results.json()).then((res) => this.setState({
+            items: res['Search'], type: type
+        }));
+    }
+
+    loadSeries = (type, term) => {
+        fetch(GET_SERIES_IMDBID(term, apikey)).then((results) => results.json()).then((res) => this.setState({
+            items: res['Search'], type: type
         }));
     }
 
 
-    selectView = (view, text) => {
-        console.log(view, text);
-        this.loadResults(view, text);
+    selectView = (type, term) => {
+        console.log(type, term);
+        if (type === 'movie')
+            this.loadMovies(type, term);
+        else if (type === 'series')
+            this.loadSeries(type, term);
     }
 
 
@@ -59,7 +66,7 @@ class Viewer extends React.Component {
             <Grid className={classes.grid}>
                 <Paper className={classes.paper}>
                     <SearchBar click={this.selectView} />
-                    <Catalog type={this.state.view_selected} items={this.state.options} />
+                    <Catalog type={this.state.type} items={this.state.items} />
                     <DownloadView />
                 </Paper>
             </Grid >

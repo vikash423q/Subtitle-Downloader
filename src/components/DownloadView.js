@@ -1,9 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
+import withStyles from '@material-ui/styles/withStyles';
+import { Grid } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-const DownloadView = () => {
+const styles = {
+    root: {
+        height: 320
+    }
+}
+
+const DownloadView = (props) => {
+    const { classes } = props;
+    console.log(props.subtitles);
     return (
-        <div></div>
+        <Grid className={classes.root}>
+
+        </Grid >
     );
 }
 
-export default DownloadView;
+const mapStateToProps = (state) => {
+    return { type: state.download.type, show: state.download.show };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(DownloadView));
