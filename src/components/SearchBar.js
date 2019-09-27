@@ -68,7 +68,7 @@ const SearchBar = (props) => {
                         value={props.term}
                         onChange={(e) => props.termChanged(e.target.value)}
                         fullWidth
-                        margin="10px"
+                        className={classes.margin}
                         variant="outlined"
                         InputLabelProps={{
                             shrink: true,

@@ -35,7 +35,9 @@ const useStyles = makeStyles(theme => ({
 
 const ListView = (props) => {
     const classes = useStyles();
-    const items = props.type !== 'skeleton'? props.items : [{imdbID:1}, {imdbID:2}, {imdbID:3},{imdbID:4}, {imdbID:5}, {imdbID:6},{imdbID:7}, {imdbID:8}, {imdbID:9}];
+    var items = props.type !== 'skeleton' ? props.items : [{ imdbID: 1 }, { imdbID: 2 }, { imdbID: 3 }, { imdbID: 4 }, { imdbID: 5 }, { imdbID: 6 }, { imdbID: 7 }, { imdbID: 8 }, { imdbID: 9 }];
+    items = items || [];
+    console.log(props.type, items);
     return (
         <div className={classes.root} my="auto">
             <GridList className={classes.gridList} cols={10} my="auto">

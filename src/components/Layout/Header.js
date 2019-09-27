@@ -21,7 +21,7 @@ const Header = (props) => {
                 <Typography variant='h5' color='inherit' className={classes.flex}>
                     Subtitle Downloader
                 </Typography>
-                <IconButton><Close classes={classes.icon} /></IconButton>
+                <IconButton><Close className={classes.icon} /></IconButton>
             </Toolbar>
         </AppBar>
     );
