@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         marginTop: 5,
         minWidth: 165,
-        minHeight: 240,
         overflow: 'hidden',
         height: '100% !important'
     }
@@ -36,11 +35,12 @@ const useStyles = makeStyles(theme => ({
 
 const ListView = (props) => {
     const classes = useStyles();
+    const items = props.type !== 'skeleton'? props.items : [{imdbID:1}, {imdbID:2}, {imdbID:3},{imdbID:4}, {imdbID:5}, {imdbID:6},{imdbID:7}, {imdbID:8}, {imdbID:9}];
     return (
         <div className={classes.root} my="auto">
             <GridList className={classes.gridList} cols={10} my="auto">
-                {props.items.map(item => (
-                    <GridListTile className={classes.tile} key={item.Poster}>
+                {items.map(item => (
+                    <GridListTile className={classes.tile} key={item.imdbID}>
                         <CardView item={item} type={props.type} />
                     </GridListTile>
                 ))}

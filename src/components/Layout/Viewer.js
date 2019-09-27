@@ -39,12 +39,14 @@ class Viewer extends React.Component {
     }
 
     loadMovies = (type, term) => {
+        this.setState({type: 'skeleton', items:[]});
         fetch(GET_MOVIE_IMDBID(term, apikey)).then((results) => results.json()).then((res) => this.setState({
             items: res['Search'], type: type
         }));
     }
 
     loadSeries = (type, term) => {
+        this.setState({type: 'skeleton', items:[]});
         fetch(GET_SERIES_IMDBID(term, apikey)).then((results) => results.json()).then((res) => this.setState({
             items: res['Search'], type: type
         }));

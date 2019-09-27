@@ -9,6 +9,11 @@ const styles = {
     },
 }
 
+const skeleton = {
+    items: [null, null, null],
+    type: 'skeleton'
+}
+
 class Catalog extends Component {
 
     constructor(props) {
@@ -16,10 +21,14 @@ class Catalog extends Component {
         this.props = props;
     }
 
+    
+
     render() {
         return (
             <Grid className={this.props.classes.root} my="auto">
-                {this.props.type != null ? <ListView items={this.props.items} type={this.props.type} /> : null}
+                {this.props.type !== 'skeleton' ?
+                (this.props.type !== null ? <ListView items={this.props.items} type={this.props.type} /> : null) : 
+                <ListView items={skeleton.items} type={skeleton.type}/>} 
             </Grid>
         );
     }

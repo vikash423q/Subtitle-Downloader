@@ -12,7 +12,8 @@ const styles = {
 
 const DownloadView = (props) => {
     const { classes } = props;
-    console.log(props.subtitles);
+    console.log('printing props');
+    console.log(props);
     return (
         <Grid className={classes.root}>
 
@@ -21,7 +22,7 @@ const DownloadView = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    return { type: state.download.type, show: state.download.show };
+    return { type: state.download.type, show: state.download.show, subtitles: state.download.subtitles };
 };
 
 const mapDispatchToProps = (dispatch) => {

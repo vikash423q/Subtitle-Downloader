@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import Skeleton from '@material-ui/lab/Skeleton';
 import request from 'request';
 import { LIST_MOVIES_SUBTITLES, LIST_SERIES_SUBTITLES } from '../config';
 import { select_show } from '../actions';
@@ -30,37 +31,38 @@ const useStyles = makeStyles(() => ({
     text: {
         fontSize: 15,
         fontFamily: 'Roboto'
+    },
+    subtext: {
+        fontSize: 14,
+        fontWeight: 200,
+        fontFamily: 'Roboto',
+        color: 'Grey'
     }
 }));
 
 const onclick = (props) => {
     var type = props.type;
-    var show = props.show;
+    var show = props.item;
     var subtitles = [];
+    if(type==='skeleton') return;
+
     if (type === 'movie') {
-        request.get(LIST_MOVIES_SUBTITLES(show.imdbID), (err, res, body) => {
-            if (err) { console.log(err); }
-            if (body.message !== 'success') { return console.log(body.message); }
-            subtitles = body.data;
-            return props.selectShow(type, show, subtitles);
-        });
+        fetch(LIST_MOVIES_SUBTITLES(show.imdbID)).then((res)=>res.json())
+        .then((body)=>props.selectShow(type, show, body.data));
+
     } else if (type === 'series') {
-        request.get(LIST_SERIES_SUBTITLES(show.imdbID), (err, res, body) => {
-            if (err) { console.log(err); }
-            if (body.message !== 'success') { return console.log(body.message); }
-            subtitles = body.data;
-            return props.selectShow(type, show, subtitles);
-        });
+        fetch(LIST_SERIES_SUBTITLES(show.imdbID)).then((res)=>res.json())
+        .then((body)=>props.selectShow(type, show, body.data));
     }
 }
 
 const CardView = (props) => {
     const classes = useStyles();
-    const { item } = props;
-    console.log(item);
+    const { item, type } = props;
     return (
         <Card className={classes.card}>
             <ButtonBase className={classes.button} onClick={() => onclick(props)} >
+                {type !== 'skeleton'?
                 <CardMedia
                     className={classes.media}
                     component="img"
@@ -68,15 +70,20 @@ const CardView = (props) => {
                     height="160"
                     src={item.Poster}
                     title={item.Title}
-                />
+                /> : 
+                <Skeleton variant="rect" className={classes.media} height={160} width={160}/>}
                 <CardContent>
+                    {type !== 'skeleton'?
                     <Typography variant="p" className={classes.text}>
                         {item.Title}
-                    </Typography>
+                    </Typography> : 
+                    <Skeleton variant="rect" width="100%"/>}
                     <br />
-                    <Typography variant="p" className={classes.text}>
+                    {type !== 'skeleton'?
+                    <Typography variant="p" className={classes.subtext}>
                         Year : {item.Year}
-                    </Typography>
+                    </Typography>:
+                    <Skeleton variant="rect" width="60%"/>}
                 </CardContent>
             </ButtonBase>
         </Card>
