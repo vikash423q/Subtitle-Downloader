@@ -7,12 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Skeleton from '@material-ui/lab/Skeleton';
-import request from 'request';
 import { LIST_MOVIES_SUBTITLES, LIST_SERIES_SUBTITLES } from '../config';
 import { select_show } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { lineHeight } from '@material-ui/system';
 
 const useStyles = makeStyles(() => ({
     button: {
@@ -45,7 +43,6 @@ const useStyles = makeStyles(() => ({
 const onclick = (props) => {
     var type = props.type;
     var show = props.item;
-    var subtitles = [];
     if (type === 'skeleton') return;
 
     if (type === 'movie') {
