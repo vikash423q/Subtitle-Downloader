@@ -5,7 +5,7 @@ import ListView from './ListView';
 
 const styles = {
     root: {
-        height: 250,
+        height: 250
     },
 }
 

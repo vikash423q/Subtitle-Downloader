@@ -2,10 +2,11 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { GET_MOVIE_IMDBID, LIST_MOVIES_SUBTITLES, GET_SERIES_IMDBID, apikey } from '../../config';
+import { GET_MOVIE_IMDBID, GET_SERIES_IMDBID, apikey } from '../../config';
 import SearchBar from '../SearchBar';
 import Catalog from '../Catalog';
 import DownloadView from '../DownloadView';
+import withWindowDimensions from '../window';
 
 const styles = {
     grid: {
@@ -79,4 +80,4 @@ class Viewer extends React.Component {
     }
 }
 
-export default withStyles(styles)(Viewer);
+export default withWindowDimensions(withStyles(styles)(Viewer));

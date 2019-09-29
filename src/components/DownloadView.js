@@ -1,32 +1,67 @@
-import React from 'react';
-import withStyles from '@material-ui/styles/withStyles';
 import { Grid } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import withStyles from '@material-ui/styles/withStyles';
+import React from 'react';
+import SubtitleView from './SubtitleView';
 
 const styles = {
     root: {
-        height: 320
+        paddingBottom: 40,
+        minHeight: 320
+    },
+    media: {
+        backgroundPosition: 'center',
+        objectFit: 'scale-down',
+        minHeight: 200
     }
+
+}
+
+const poster = (item, classes) => {
+    return (
+        <Card className={classes.card}>
+            <CardActionArea>
+                <CardMedia
+                    className={classes.media}
+                    image={item.Poster}
+                    title={item.Title}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {item.Title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+          </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    );
+}
+
+const view = (props) => {
+    return (
+        <React.Fragment>
+            <Grid item md={8}>
+                <SubtitleView />
+            </Grid>
+            <Grid item md={4}>
+            </Grid>
+        </React.Fragment>
+    );
 }
 
 const DownloadView = (props) => {
     const { classes } = props;
-    console.log('printing props');
-    console.log(props);
     return (
-        <Grid className={classes.root}>
-
+        <Grid container className={classes.root}>
+            {view(props)}
         </Grid >
     );
 }
-
-const mapStateToProps = (state) => {
-    return { type: state.download.type, show: state.download.show, subtitles: state.download.subtitles };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({}, dispatch);
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(DownloadView));
+export default withStyles(styles)(DownloadView);

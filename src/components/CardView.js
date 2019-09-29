@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { LIST_MOVIES_SUBTITLES, LIST_SERIES_SUBTITLES } from '../config';
-import { select_show } from '../actions';
+import { LIST_MOVIES_SUBTITLES, LIST_SERIES_EPISODES, apikey } from '../config';
+import { select_show, download_subtitle, type_change } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -18,7 +18,8 @@ const useStyles = makeStyles(() => ({
         textAlign: 'initial'
     },
     card: {
-        marginRight: 2,
+        marginLeft: 1.5,
+        marginRight: 1.5,
         width: 160,
         height: 240,
         color: blueGrey
@@ -46,12 +47,15 @@ const onclick = (props) => {
     if (type === 'skeleton') return;
 
     if (type === 'movie') {
+        props.openSelected(type, show, [], true);
+        props.changeType(type);
         fetch(LIST_MOVIES_SUBTITLES(show.imdbID)).then((res) => res.json())
-            .then((body) => props.selectShow(type, show, body.data));
+            .then((body) => props.openSelected(type, show, body.data, false));
 
     } else if (type === 'series') {
-        fetch(LIST_SERIES_SUBTITLES(show.imdbID)).then((res) => res.json())
-            .then((body) => props.selectShow(type, show, body.data));
+        props.selectShow(type, show, {}, true);
+        fetch(LIST_SERIES_EPISODES(show.imdbID, 1, apikey)).then((res) => res.json())
+            .then((body) => props.selectShow(type, show, body, false));
     }
 }
 
@@ -94,7 +98,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ selectShow: select_show }, dispatch);
+    return bindActionCreators({ openSelected: download_subtitle, selectShow: select_show, changeType: type_change }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardView);

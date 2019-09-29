@@ -9,9 +9,13 @@ const useStyles = makeStyles(theme => ({
     root: {
         marginRight: 10,
         marginLeft: 10,
+        paddingTop: 4,
+        paddingLeft: 4,
+        paddingRight: 4,
         height: '100%',
         display: 'flex',
         flexWrap: 'wrap',
+        alignItems: 'center',
         justifyContent: 'space-around',
         backgroundColor: 'lightGrey',
         elevation: 8
@@ -20,12 +24,12 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'nowrap',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
+        height: '100% !important'
     },
     tile: {
         position: 'relative',
         float: 'left',
         width: '100%',
-        marginTop: 5,
         minWidth: 165,
         overflow: 'hidden',
         height: '100% !important'
@@ -40,9 +44,9 @@ const ListView = (props) => {
     console.log(props.type, items);
     return (
         <div className={classes.root} my="auto">
-            <GridList className={classes.gridList} cols={10} my="auto">
+            <GridList className={classes.gridList} cols={10} >
                 {items.map(item => (
-                    <GridListTile className={classes.tile} key={item.imdbID}>
+                    <GridListTile className={classes.tile} my="auto" key={item.imdbID}>
                         <CardView item={item} type={props.type} />
                     </GridListTile>
                 ))}

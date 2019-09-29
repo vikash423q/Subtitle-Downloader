@@ -25,10 +25,10 @@ const styles = {
         height: 500
     },
     container: {
-
         display: 'flex',
         flexWrap: 'no-wrap',
-        margin: 10
+        margin: 10,
+        marginLeft: 15
     },
     margin: {
         margin: 5
@@ -45,7 +45,7 @@ const SearchBar = (props) => {
 
     return (
         <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={3} md={2}>
                 <FormControl className={classes.container}>
                     <InputLabel htmlFor="type">Type</InputLabel>
                     <Select
@@ -57,7 +57,7 @@ const SearchBar = (props) => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={8} sm={6}>
                 <FormGroup>
 
                     <TextField
@@ -76,7 +76,7 @@ const SearchBar = (props) => {
                     />
                 </FormGroup>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4} sm={2}>
                 <Button variant="contained" color="primary" size="large"
                     onClick={() => props.click(props.type, props.term)}
                     className={classes.button}>Search</Button>
